@@ -6,7 +6,7 @@ import { emptyOptional, optionalFunc, OptionalValue } from './optional.ts';
  * Creates an optional value wrapper around the provided value.
  * An optional value can either contain a defined value or be empty.
  */
-type OptionalType = {
+export type OptionalType = {
   /**
    * Creates an Optional instance with the specified nonnullable value.
    * @param value - The value to wrap in an Optional.

@@ -8,12 +8,12 @@ export default defineConfig({
   plugins: [
     dts({
       include: ['lib'],
-      exclude: ['**/*.test.ts', 'lib/util'],
+      exclude: ['**/*.test.ts', 'lib/tsdoc.ts'],
     }),
   ],
   build: {
     lib: {
-      entry: [resolve(__dirname, 'lib/core/index.ts')],
+      entry: [resolve(__dirname, 'lib/better-optional.ts')],
       name,
       fileName: (format) =>
         format === 'es' ? `${name}.js` : `${name}.${format}.js`,

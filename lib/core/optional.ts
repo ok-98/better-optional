@@ -1,20 +1,15 @@
-import type {
-  EmptyFunction,
-  Optional,
-  SimpleFunction,
-  TOrUndefined,
-} from 'only-utils';
+import type { EmptyFunction, Optional, SimpleFunction } from 'only-utils';
 
 /**
  * Represents an optional value that may or may not be present.
  * @template T - The type of the optional value.
  */
-export type OptionalValue<T> = Pick<Object, 'toString'> & {
+export type OptionalValue<T> = {
   /**
    * Retrieves the value if present, otherwise returns undefined.
-   * @returns The optional value or undefined.
+   * @returns The optional value or throws an err.
    */
-  get: () => TOrUndefined<NonNullable<T>>;
+  get: () => NonNullable<T>;
 
   /**
    * Returns this optional value if present, otherwise returns the other optional value.
@@ -41,21 +36,21 @@ export type OptionalValue<T> = Pick<Object, 'toString'> & {
    * @param defaultValue - The default value to return if the optional value is not present.
    * @returns The value if present, otherwise the default value.
    */
-  orElse: (defaultValue: T) => T;
+  orElse: <R = T>(defaultValue: R) => T | R;
 
   /**
    * Returns the value if present, otherwise returns the value supplied by the supplier function.
    * @param supplier - The function that supplies the value if the optional value is not present.
    * @returns The value if present, otherwise the value supplied by the supplier function.
    */
-  orElseGet: (supplier: () => T) => T;
+  orElseGet: <R = T>(supplier: () => R) => T | R;
 
   /**
    * Returns the value if present, otherwise returns the value supplied by the supplier function.
    * @param supplier - The function that supplies the value if the optional value is not present.
    * @returns The value if present, otherwise the value supplied by the supplier function.
    */
-  orElseGetAsync: (supplier: () => Promise<T>) => Promise<T>;
+  orElseGetAsync: <R = T>(supplier: () => Promise<R>) => Promise<T | R>;
 
   /**
    * Returns the value if present, otherwise throws the specified error.
@@ -63,19 +58,21 @@ export type OptionalValue<T> = Pick<Object, 'toString'> & {
    * @returns The value if present.
    * @throws The specified error if the optional value is not present.
    */
-  orElseThrow: (error: Error) => T;
+  orElseThrow: <E extends Error>(error: E) => NonNullable<T>;
 
   /**
    * Executes the specified callback function if the optional value is present.
    * @param callback - The callback function to execute.
    */
-  ifPresent: (callback: SimpleFunction<T>) => void;
+  ifPresent: (callback: SimpleFunction<NonNullable<T>>) => void;
 
   /**
    * Executes the specified async callback function if the optional value is present.
    * @param callback - The callback function to execute.
    */
-  ifPresentAsync: (callback: SimpleFunction<T, Promise<void>>) => Promise<void>;
+  ifPresentAsync: (
+    callback: SimpleFunction<NonNullable<T>, Promise<void>>,
+  ) => Promise<void>;
 
   /**
    * Executes the specified callback function if the optional value is present, otherwise executes the empty action.
@@ -83,7 +80,7 @@ export type OptionalValue<T> = Pick<Object, 'toString'> & {
    * @param emptyAction - The action to execute if the optional value is not present.
    */
   ifPresentOrElse: (
-    callback: SimpleFunction<T>,
+    callback: SimpleFunction<NonNullable<T>>,
     emptyAction: EmptyFunction,
   ) => void;
 
@@ -93,7 +90,7 @@ export type OptionalValue<T> = Pick<Object, 'toString'> & {
    * @param emptyAction - The action to execute if the optional value is not present.
    */
   ifPresentOrElseAsync: (
-    callback: SimpleFunction<T, Promise<void>>,
+    callback: SimpleFunction<NonNullable<T>, Promise<void>>,
     emptyAction: EmptyFunction<Promise<void>>,
   ) => Promise<void>;
 
@@ -102,7 +99,9 @@ export type OptionalValue<T> = Pick<Object, 'toString'> & {
    * @param predicate - The predicate function to filter the optional value.
    * @returns A new optional value that contains the filtered value if present, otherwise an empty optional value.
    */
-  filter: (predicate: SimpleFunction<T, boolean>) => OptionalValue<T>;
+  filter: (
+    predicate: SimpleFunction<NonNullable<T>, boolean>,
+  ) => OptionalValue<T>;
 
   /**
    * Filters the optional value based on the specified async predicate function.
@@ -110,7 +109,7 @@ export type OptionalValue<T> = Pick<Object, 'toString'> & {
    * @returns A new optional value that contains the filtered value if present, otherwise an empty optional value.
    */
   filterAsync: (
-    predicate: SimpleFunction<T, Promise<boolean>>,
+    predicate: SimpleFunction<NonNullable<T>, Promise<boolean>>,
   ) => Promise<OptionalValue<T>>;
 
   /**
@@ -119,7 +118,7 @@ export type OptionalValue<T> = Pick<Object, 'toString'> & {
    * @param mapper - The mapper function to transform the optional value.
    * @returns A new optional value that contains the mapped value if present, otherwise an empty optional value.
    */
-  map: <R>(mapper: SimpleFunction<T, R>) => OptionalValue<R>;
+  map: <R>(mapper: SimpleFunction<NonNullable<T>, R>) => OptionalValue<R>;
 
   /**
    * Maps the optional value to a new value using the specified async mapper function.
@@ -128,7 +127,7 @@ export type OptionalValue<T> = Pick<Object, 'toString'> & {
    * @returns A new optional value that contains the mapped value if present, otherwise an empty optional value.
    */
   mapAsync: <R>(
-    mapper: SimpleFunction<T, Promise<R>>,
+    mapper: SimpleFunction<NonNullable<T>, Promise<R>>,
   ) => Promise<OptionalValue<R>>;
 
   /**
@@ -137,7 +136,9 @@ export type OptionalValue<T> = Pick<Object, 'toString'> & {
    * @param mapper - The mapper function to transform the optional value.
    * @returns A new optional value that contains the mapped value if present, otherwise an empty optional value.
    */
-  flatMap: <R>(mapper: SimpleFunction<T, OptionalValue<R>>) => OptionalValue<R>;
+  flatMap: <R>(
+    mapper: SimpleFunction<NonNullable<T>, OptionalValue<R>>,
+  ) => OptionalValue<R>;
 
   /**
    * Maps the optional value to a new optional using the specified async mapper function.
@@ -146,9 +147,11 @@ export type OptionalValue<T> = Pick<Object, 'toString'> & {
    * @returns A new optional value that contains the mapped value if present, otherwise an empty optional value.
    */
   flatMapAsync: <R>(
-    mapper: SimpleFunction<T, Promise<OptionalValue<R>>>,
+    mapper: SimpleFunction<NonNullable<T>, Promise<OptionalValue<R>>>,
   ) => Promise<OptionalValue<R>>;
 };
+
+type OptionalValueWithValueOf<T> = OptionalValue<T> & Object;
 
 /**
  * Represents an empty optional value.
@@ -168,12 +171,15 @@ export const emptyOptional = optionalFunc<unknown>(void 0);
 export function optionalFunc<T>(value: Optional<T>): OptionalValue<T> {
   const defined = value !== null && value !== undefined;
 
-  return {
+  const returnValue: OptionalValueWithValueOf<T> = {
     get: function () {
       if (defined) {
-        return value;
+        return value!;
       }
       throw new Error('Value is not present');
+    },
+    valueOf: function () {
+      return value!;
     },
     or: function <R>(other: OptionalValue<R>) {
       return defined ? this : other;
@@ -184,71 +190,75 @@ export function optionalFunc<T>(value: Optional<T>): OptionalValue<T> {
     isEmpty: function () {
       return !defined;
     },
-    orElse: function (defaultValue: T) {
-      return this.get() ?? defaultValue;
+    orElse: function <R = T>(defaultValue: R) {
+      return defined ? value! : defaultValue;
     },
-    orElseGet: function (supplier: () => T) {
-      return defined ? value : supplier();
+    orElseGet: function <R = T>(supplier: () => R) {
+      return defined ? value! : supplier();
     },
-    orElseGetAsync: async function (supplier: () => Promise<T>) {
-      return defined ? value : await supplier();
+    orElseGetAsync: async function <R = T>(supplier: () => Promise<R>) {
+      return defined ? value! : await supplier();
     },
-    orElseThrow: function (error: Error) {
+    orElseThrow: function <E extends Error>(error: E) {
       if (defined) {
-        return value;
+        return value!;
       }
       throw error;
     },
-    map: function <R>(mapper: SimpleFunction<T, R>): OptionalValue<R> {
+    map: function <R>(
+      mapper: SimpleFunction<NonNullable<T>, R>,
+    ): OptionalValue<R> {
       return defined
         ? optionalFunc(mapper(value))
         : (emptyOptional as OptionalValue<R>);
     },
     mapAsync: async function <R>(
-      mapper: SimpleFunction<T, Promise<R>>,
+      mapper: SimpleFunction<NonNullable<T>, Promise<R>>,
     ): Promise<OptionalValue<R>> {
       return defined
         ? optionalFunc<R>(await mapper(value))
         : (emptyOptional as OptionalValue<R>);
     },
     flatMap: function <R>(
-      mapper: SimpleFunction<T, OptionalValue<R>>,
+      mapper: SimpleFunction<NonNullable<T>, OptionalValue<R>>,
     ): OptionalValue<R> {
       return defined ? mapper(value) : (emptyOptional as OptionalValue<R>);
     },
     flatMapAsync: async function <R>(
-      mapper: SimpleFunction<T, Promise<OptionalValue<R>>>,
+      mapper: SimpleFunction<NonNullable<T>, Promise<OptionalValue<R>>>,
     ): Promise<OptionalValue<R>> {
       return defined
         ? await mapper(value)
         : (emptyOptional as OptionalValue<R>);
     },
-    filter: function (predicate: SimpleFunction<T, boolean>): OptionalValue<T> {
+    filter: function (
+      predicate: SimpleFunction<NonNullable<T>, boolean>,
+    ): OptionalValue<T> {
       return defined && predicate(value)
         ? this
         : (emptyOptional as OptionalValue<T>);
     },
     filterAsync: async function (
-      predicate: SimpleFunction<T, Promise<boolean>>,
+      predicate: SimpleFunction<NonNullable<T>, Promise<boolean>>,
     ): Promise<OptionalValue<T>> {
       return defined && (await predicate(value))
         ? this
         : (emptyOptional as OptionalValue<T>);
     },
-    ifPresent: function (callback: SimpleFunction<T>): void {
+    ifPresent: function (callback: SimpleFunction<NonNullable<T>>): void {
       if (defined) {
         callback(value);
       }
     },
     ifPresentAsync: async function (
-      callback: SimpleFunction<T, Promise<void>>,
+      callback: SimpleFunction<NonNullable<T>, Promise<void>>,
     ): Promise<void> {
       if (defined) {
         await callback(value);
       }
     },
     ifPresentOrElse: function (
-      callback: SimpleFunction<T>,
+      callback: SimpleFunction<NonNullable<T>>,
       emptyAction: EmptyFunction,
     ): void {
       if (defined) {
@@ -258,7 +268,7 @@ export function optionalFunc<T>(value: Optional<T>): OptionalValue<T> {
       }
     },
     ifPresentOrElseAsync: async function (
-      callback: SimpleFunction<T, Promise<void>>,
+      callback: SimpleFunction<NonNullable<T>, Promise<void>>,
       emptyAction: EmptyFunction<Promise<void>>,
     ): Promise<void> {
       if (defined) {
@@ -268,7 +278,12 @@ export function optionalFunc<T>(value: Optional<T>): OptionalValue<T> {
       }
     },
     toString: function () {
-      return defined ? `Optional[${value}]` : 'Optional.empty';
+      return defined ? `Optional[${value.toString()}]` : 'Optional.empty';
+    },
+    toLocaleString: function () {
+      return defined ? `Optional[${value.toLocaleString()}]` : 'Optional.empty';
     },
   };
+
+  return returnValue as OptionalValue<T>;
 }
