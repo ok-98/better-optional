@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      better-optional:
+        specifier: ^1.0.0
+        version: 1.0.0
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.1
@@ -775,6 +779,10 @@ packages:
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  better-optional@1.0.0:
+    resolution: {integrity: sha512-hEy2E2Q7UTwrFCJT43JzZCV8xrfmg9bj66uhTS666AwsvoTYz/7omOYFE0mgMku/TOAAOdK9hP+Bu+AvtD15CA==}
+    engines: {node: '>=18'}
 
   better-path-resolve@1.0.0:
     resolution: {integrity: sha512-pbnl5XzGBdrFU/wT4jqmJVPn2B6UHPBOhzMQkY/SPUPB6QtUXtmBHBIwCbXJol93mOpGMnQyP/+BB19q04xj7g==}
@@ -3288,6 +3296,8 @@ snapshots:
       possible-typed-array-names: 1.0.0
 
   balanced-match@1.0.2: {}
+
+  better-optional@1.0.0: {}
 
   better-path-resolve@1.0.0:
     dependencies:
