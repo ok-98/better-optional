@@ -1,6 +1,6 @@
 {
   "name": "better-optional",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "sideEffects": false,
   "description": "Functional \"Optionals\" solution for JavaScript and TypeScript with async support",
   "license": "MIT",
@@ -75,7 +75,7 @@
     "eslint-config-xo-typescript": "^4.0.0",
     "eslint-plugin-prettier": "^5.1.3",
     "husky": "^9.0.11",
-    "only-utils": "^0.4.5",
+    "only-utils": "^0.4.7",
     "prettier": "^3.2.5",
     "prettier-eslint": "^16.3.0",
     "pretty-quick": "^4.0.0",

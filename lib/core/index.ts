@@ -1,5 +1,6 @@
-import type { Optional as Nullish, TOrNull, TOrUndefined } from 'only-utils';
+import type { OptionalT, TOrNull, TOrUndefined } from 'only-utils';
 import { emptyOptional, optionalFunc, OptionalValue } from './optional.ts';
+import { errors } from './errors.ts';
 
 /**
  * This is similar like the Optional class in Java.
@@ -20,7 +21,7 @@ export type OptionalType = {
    * @param value - The value to wrap in an Optional.
    * @returns An OptionalValue instance containing the specified value.
    */
-  ofNullish: <T>(value: Nullish<T>) => OptionalValue<T>;
+  ofNullish: <T>(value: OptionalT<T>) => OptionalValue<T>;
 
   /**
    * Creates an Optional instance with the specified value, which can be null.
@@ -47,26 +48,21 @@ export const Optional: OptionalType = {
     if (value !== null && value !== undefined) {
       return optionalFunc<T>(value);
     }
-    throw new Error(
-      'Cannot create an optional value from a nullish value. If you want to do this on purpose use Optional.ofNullish(). If you want to create an empty optional, use Optional.empty() instead.',
-    );
+    throw new Error(errors.createError('nullish'));
   },
-  ofNullish: <T>(value: Nullish<T>): OptionalValue<T> => optionalFunc<T>(value),
+  ofNullish: <T>(value: OptionalT<T>): OptionalValue<T> =>
+    optionalFunc<T>(value),
   ofNullable: <T>(value: TOrNull<T>): OptionalValue<T> => {
     if (value !== undefined) {
       return optionalFunc<T>(value);
     }
-    throw new Error(
-      'Cannot create an optional value from a undefined value. If you want to create an empty optional, use Optional.empty() instead.',
-    );
+    throw new Error(errors.createError('undefined'));
   },
   ofUndefinable: <T>(value: TOrUndefined<T>): OptionalValue<T> => {
     if (value !== null) {
       return optionalFunc<T>(value);
     }
-    throw new Error(
-      'Cannot create an optional value from a null value. If you want to create an empty optional, use Optional.empty() instead.',
-    );
+    throw new Error(errors.createError('null'));
   },
   empty: <T = unknown>(): OptionalValue<T> => emptyOptional as OptionalValue<T>,
 };

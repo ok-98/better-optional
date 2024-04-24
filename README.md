@@ -57,12 +57,12 @@ An optional value can either contain a defined value or be empty.
 | `empty` | \<T\>() => [`OptionalValue`](modules.md#optionalvalue)\<`T`\> | - |
 | `of` | \<T\>(`value`: `NonNullable`\<`T`\>) => [`OptionalValue`](modules.md#optionalvalue)\<`T`\> | - |
 | `ofNullable` | \<T\>(`value`: `TOrNull`\<`T`\>) => [`OptionalValue`](modules.md#optionalvalue)\<`T`\> | - |
-| `ofNullish` | \<T\>(`value`: `Nullish`\<`T`\>) => [`OptionalValue`](modules.md#optionalvalue)\<`T`\> | - |
+| `ofNullish` | \<T\>(`value`: `OptionalT`\<`T`\>) => [`OptionalValue`](modules.md#optionalvalue)\<`T`\> | - |
 | `ofUndefinable` | \<T\>(`value`: `TOrUndefined`\<`T`\>) => [`OptionalValue`](modules.md#optionalvalue)\<`T`\> | - |
 
 #### Defined in
 
-[core/index.ts:9](https://github.com/kacper-olszanski/better-optional/blob/d0bd1920ec6c78afb89fec2e46282508e43722bd/lib/core/index.ts#L9)
+[core/index.ts:10](https://github.com/kacper-olszanski/better-optional/blob/66116785ab861ed9d7ffb1b47177f97d00bf2399/lib/core/index.ts#L10)
 
 ___
 
@@ -103,7 +103,7 @@ Represents an optional value that may or may not be present.
 
 #### Defined in
 
-[core/optional.ts:7](https://github.com/kacper-olszanski/better-optional/blob/d0bd1920ec6c78afb89fec2e46282508e43722bd/lib/core/optional.ts#L7)
+[core/optional.ts:8](https://github.com/kacper-olszanski/better-optional/blob/66116785ab861ed9d7ffb1b47177f97d00bf2399/lib/core/optional.ts#L8)
 
 ## Variables
 
@@ -113,5 +113,5 @@ Represents an optional value that may or may not be present.
 
 #### Defined in
 
-[core/index.ts:45](https://github.com/kacper-olszanski/better-optional/blob/d0bd1920ec6c78afb89fec2e46282508e43722bd/lib/core/index.ts#L45)
+[core/index.ts:46](https://github.com/kacper-olszanski/better-optional/blob/66116785ab861ed9d7ffb1b47177f97d00bf2399/lib/core/index.ts#L46)
 

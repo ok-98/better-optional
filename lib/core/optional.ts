@@ -1,4 +1,5 @@
-import type { EmptyFunction, Optional, SimpleFunction } from 'only-utils';
+import type { EmptyFunction, OptionalT, SimpleFunction } from 'only-utils';
+import { errors } from './errors.ts';
 
 /**
  * Represents an optional value that may or may not be present.
@@ -168,7 +169,7 @@ export const emptyOptional = optionalFunc<unknown>(void 0);
  * @param value - The value to be wrapped.
  * @returns An object with various utility methods to work with the optional value.
  */
-export function optionalFunc<T>(value: Optional<T>): OptionalValue<T> {
+export function optionalFunc<T>(value: OptionalT<T>): OptionalValue<T> {
   const defined = value !== null && value !== undefined;
 
   const returnValue: OptionalValueWithValueOf<T> = {
@@ -176,7 +177,7 @@ export function optionalFunc<T>(value: Optional<T>): OptionalValue<T> {
       if (defined) {
         return value!;
       }
-      throw new Error('Value is not present');
+      throw new Error(errors.notPresent);
     },
     valueOf: function () {
       return value!;
@@ -278,12 +279,17 @@ export function optionalFunc<T>(value: Optional<T>): OptionalValue<T> {
       }
     },
     toString: function () {
-      return defined ? `Optional[${value.toString()}]` : 'Optional.empty';
+      return defined ? optionalStringOf(value.toString()) : optionalEmptyString;
     },
     toLocaleString: function () {
-      return defined ? `Optional[${value.toLocaleString()}]` : 'Optional.empty';
+      return defined
+        ? optionalStringOf(value.toLocaleString())
+        : optionalEmptyString;
     },
   };
 
   return returnValue as OptionalValue<T>;
 }
+const optionalString = 'Optional';
+const optionalStringOf = (value: string) => `${optionalString}[${value}]`;
+const optionalEmptyString = optionalString + '.empty';
