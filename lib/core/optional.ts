@@ -1,5 +1,6 @@
 import type { EmptyFunction, OptionalT, SimpleFunction } from 'only-utils';
 import { errors } from './errors.ts';
+import { NoSuchElementError } from 'errors-es';
 
 /**
  * Represents an optional value that may or may not be present.
@@ -177,7 +178,7 @@ export function optionalFunc<T>(value: OptionalT<T>): OptionalValue<T> {
       if (defined) {
         return value!;
       }
-      throw new Error(errors.notPresent);
+      throw new NoSuchElementError(errors.notPresent);
     },
     valueOf: function () {
       return value!;

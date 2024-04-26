@@ -62,7 +62,7 @@ An optional value can either contain a defined value or be empty.
 
 #### Defined in
 
-[core/index.ts:10](https://github.com/kacper-olszanski/better-optional/blob/66116785ab861ed9d7ffb1b47177f97d00bf2399/lib/core/index.ts#L10)
+[core/index.ts:11](https://github.com/kacper-olszanski/better-optional/blob/2058c7b813595701f0c410191b94920545a59158/lib/core/index.ts#L11)
 
 ___
 
@@ -103,7 +103,7 @@ Represents an optional value that may or may not be present.
 
 #### Defined in
 
-[core/optional.ts:8](https://github.com/kacper-olszanski/better-optional/blob/66116785ab861ed9d7ffb1b47177f97d00bf2399/lib/core/optional.ts#L8)
+[core/optional.ts:9](https://github.com/kacper-olszanski/better-optional/blob/2058c7b813595701f0c410191b94920545a59158/lib/core/optional.ts#L9)
 
 ## Variables
 
@@ -113,5 +113,5 @@ Represents an optional value that may or may not be present.
 
 #### Defined in
 
-[core/index.ts:46](https://github.com/kacper-olszanski/better-optional/blob/66116785ab861ed9d7ffb1b47177f97d00bf2399/lib/core/index.ts#L46)
+[core/index.ts:50](https://github.com/kacper-olszanski/better-optional/blob/2058c7b813595701f0c410191b94920545a59158/lib/core/index.ts#L50)
 

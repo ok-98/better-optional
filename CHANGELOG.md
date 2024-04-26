@@ -1,5 +1,11 @@
 # better-optional
 
+## 1.0.3
+
+### Patch Changes
+
+- better error-handling
+
 ## 1.0.2
 
 ### Patch Changes

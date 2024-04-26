@@ -1,6 +1,7 @@
 import type { OptionalT, TOrNull, TOrUndefined } from 'only-utils';
 import { emptyOptional, optionalFunc, OptionalValue } from './optional.ts';
 import { errors } from './errors.ts';
+import { NullError, NullishError, UndefinedError } from 'errors-es';
 
 /**
  * This is similar like the Optional class in Java.
@@ -13,6 +14,7 @@ export type OptionalType = {
    * @param value - The value to wrap in an Optional.
    * @returns An OptionalValue instance containing the specified value.
    * @throws Error if the value is null or undefined.
+   * @throws NullishError if the value is null or undefined.
    */
   of: <T>(value: NonNullable<T>) => OptionalValue<T>;
 
@@ -27,11 +29,13 @@ export type OptionalType = {
    * Creates an Optional instance with the specified value, which can be null.
    * @param value - The value to wrap in an Optional.
    * @returns An OptionalValue instance containing the specified value.
+   * @throws UndefinedError if the value is undefined.
    */
   ofNullable: <T>(value: TOrNull<T>) => OptionalValue<T>;
   /**
    * Creates an Optional instance with the specified value, which can be null.
    * @param value - The value to wrap in an Optional.
+   * @throws NullError if the value is null.
    * @returns An OptionalValue instance containing the specified value.
    */
   ofUndefinable: <T>(value: TOrUndefined<T>) => OptionalValue<T>;
@@ -48,7 +52,7 @@ export const Optional: OptionalType = {
     if (value !== null && value !== undefined) {
       return optionalFunc<T>(value);
     }
-    throw new Error(errors.createError('nullish'));
+    throw new NullishError(undefined, errors.createError('nullish'));
   },
   ofNullish: <T>(value: OptionalT<T>): OptionalValue<T> =>
     optionalFunc<T>(value),
@@ -56,13 +60,13 @@ export const Optional: OptionalType = {
     if (value !== undefined) {
       return optionalFunc<T>(value);
     }
-    throw new Error(errors.createError('undefined'));
+    throw new UndefinedError(errors.createError('undefined'));
   },
   ofUndefinable: <T>(value: TOrUndefined<T>): OptionalValue<T> => {
     if (value !== null) {
       return optionalFunc<T>(value);
     }
-    throw new Error(errors.createError('null'));
+    throw new NullError(errors.createError('null'));
   },
   empty: <T = unknown>(): OptionalValue<T> => emptyOptional as OptionalValue<T>,
 };
