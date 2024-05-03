@@ -1,6 +1,6 @@
 import type { OptionalT, TOrNull, TOrUndefined } from 'only-utils';
 import { emptyOptional, optionalFunc, OptionalValue } from './optional.ts';
-import { errors } from './errors.ts';
+import { createError } from './errors.ts';
 import { NullError, NullishError, UndefinedError } from 'errors-es';
 
 /**
@@ -52,7 +52,7 @@ export const Optional: OptionalType = {
     if (value !== null && value !== undefined) {
       return optionalFunc<T>(value);
     }
-    throw new NullishError(undefined, errors.createError('nullish'));
+    throw new NullishError(undefined, createError('nullish'));
   },
   ofNullish: <T>(value: OptionalT<T>): OptionalValue<T> =>
     optionalFunc<T>(value),
@@ -60,13 +60,13 @@ export const Optional: OptionalType = {
     if (value !== undefined) {
       return optionalFunc<T>(value);
     }
-    throw new UndefinedError(errors.createError('undefined'));
+    throw new UndefinedError(createError('undefined'));
   },
   ofUndefinable: <T>(value: TOrUndefined<T>): OptionalValue<T> => {
     if (value !== null) {
       return optionalFunc<T>(value);
     }
-    throw new NullError(errors.createError('null'));
+    throw new NullError(createError('null'));
   },
   empty: <T = unknown>(): OptionalValue<T> => emptyOptional as OptionalValue<T>,
 };

@@ -1,6 +1,7 @@
 import type { EmptyFunction, OptionalT, SimpleFunction } from 'only-utils';
-import { errors } from './errors.ts';
 import { NoSuchElementError } from 'errors-es';
+import { isDefined } from './util.ts';
+import { notPresent } from './errors.ts';
 
 /**
  * Represents an optional value that may or may not be present.
@@ -171,122 +172,73 @@ export const emptyOptional = optionalFunc<unknown>(void 0);
  * @returns An object with various utility methods to work with the optional value.
  */
 export function optionalFunc<T>(value: OptionalT<T>): OptionalValue<T> {
-  const defined = value !== null && value !== undefined;
+  const defined = isDefined(value);
+
+  const orThrow = (error?: Error): NonNullable<T> => {
+    if (defined) {
+      return value!;
+    }
+    throw error ?? new NoSuchElementError(notPresent);
+  };
 
   const returnValue: OptionalValueWithValueOf<T> = {
-    get: function () {
-      if (defined) {
-        return value!;
-      }
-      throw new NoSuchElementError(errors.notPresent);
-    },
-    valueOf: function () {
-      return value!;
-    },
-    or: function <R>(other: OptionalValue<R>) {
-      return defined ? this : other;
-    },
-    isPresent: function () {
-      return defined;
-    },
-    isEmpty: function () {
-      return !defined;
-    },
-    orElse: function <R = T>(defaultValue: R) {
-      return defined ? value! : defaultValue;
-    },
-    orElseGet: function <R = T>(supplier: () => R) {
-      return defined ? value! : supplier();
-    },
-    orElseGetAsync: async function <R = T>(supplier: () => Promise<R>) {
-      return defined ? value! : await supplier();
-    },
-    orElseThrow: function <E extends Error>(error: E) {
-      if (defined) {
-        return value!;
-      }
-      throw error;
-    },
-    map: function <R>(
-      mapper: SimpleFunction<NonNullable<T>, R>,
-    ): OptionalValue<R> {
-      return defined
+    get: () => orThrow(),
+    valueOf: () => value!,
+    or: <R>(other: OptionalValue<R>) => (defined ? returnValue : other),
+    isPresent: () => defined,
+    isEmpty: () => !defined,
+    orElse: <R = T>(defaultValue: R) => (defined ? value! : defaultValue),
+    orElseGet: <R = T>(supplier: () => R) => (defined ? value! : supplier()),
+    orElseGetAsync: async <R = T>(supplier: () => Promise<R>) =>
+      defined ? value! : await supplier(),
+    orElseThrow: <E extends Error>(error: E) => orThrow(error),
+    map: <R>(mapper: SimpleFunction<NonNullable<T>, R>): OptionalValue<R> =>
+      defined
         ? optionalFunc(mapper(value))
-        : (emptyOptional as OptionalValue<R>);
-    },
-    mapAsync: async function <R>(
+        : (emptyOptional as OptionalValue<R>),
+    mapAsync: async <R>(
       mapper: SimpleFunction<NonNullable<T>, Promise<R>>,
-    ): Promise<OptionalValue<R>> {
-      return defined
+    ): Promise<OptionalValue<R>> =>
+      defined
         ? optionalFunc<R>(await mapper(value))
-        : (emptyOptional as OptionalValue<R>);
-    },
-    flatMap: function <R>(
+        : (emptyOptional as OptionalValue<R>),
+    flatMap: <R>(
       mapper: SimpleFunction<NonNullable<T>, OptionalValue<R>>,
-    ): OptionalValue<R> {
-      return defined ? mapper(value) : (emptyOptional as OptionalValue<R>);
-    },
-    flatMapAsync: async function <R>(
+    ): OptionalValue<R> =>
+      defined ? mapper(value) : (emptyOptional as OptionalValue<R>),
+    flatMapAsync: async <R>(
       mapper: SimpleFunction<NonNullable<T>, Promise<OptionalValue<R>>>,
-    ): Promise<OptionalValue<R>> {
-      return defined
-        ? await mapper(value)
-        : (emptyOptional as OptionalValue<R>);
-    },
-    filter: function (
+    ): Promise<OptionalValue<R>> =>
+      defined ? await mapper(value) : (emptyOptional as OptionalValue<R>),
+    filter: (
       predicate: SimpleFunction<NonNullable<T>, boolean>,
-    ): OptionalValue<T> {
-      return defined && predicate(value)
-        ? this
-        : (emptyOptional as OptionalValue<T>);
-    },
-    filterAsync: async function (
+    ): OptionalValue<T> =>
+      defined && predicate(value)
+        ? returnValue
+        : (emptyOptional as OptionalValue<T>),
+    filterAsync: async (
       predicate: SimpleFunction<NonNullable<T>, Promise<boolean>>,
-    ): Promise<OptionalValue<T>> {
-      return defined && (await predicate(value))
-        ? this
-        : (emptyOptional as OptionalValue<T>);
-    },
-    ifPresent: function (callback: SimpleFunction<NonNullable<T>>): void {
-      if (defined) {
-        callback(value);
-      }
-    },
-    ifPresentAsync: async function (
+    ): Promise<OptionalValue<T>> =>
+      defined && (await predicate(value))
+        ? returnValue
+        : (emptyOptional as OptionalValue<T>),
+    ifPresent: (callback: SimpleFunction<NonNullable<T>>): void =>
+      defined ? callback(value) : void 0,
+    ifPresentAsync: async (
       callback: SimpleFunction<NonNullable<T>, Promise<void>>,
-    ): Promise<void> {
-      if (defined) {
-        await callback(value);
-      }
-    },
-    ifPresentOrElse: function (
+    ): Promise<void> => (defined ? await callback(value) : void 0),
+    ifPresentOrElse: (
       callback: SimpleFunction<NonNullable<T>>,
       emptyAction: EmptyFunction,
-    ): void {
-      if (defined) {
-        callback(value);
-      } else {
-        emptyAction();
-      }
-    },
-    ifPresentOrElseAsync: async function (
+    ): void => (defined ? callback(value) : emptyAction()),
+    ifPresentOrElseAsync: async (
       callback: SimpleFunction<NonNullable<T>, Promise<void>>,
       emptyAction: EmptyFunction<Promise<void>>,
-    ): Promise<void> {
-      if (defined) {
-        await callback(value);
-      } else {
-        await emptyAction();
-      }
-    },
-    toString: function () {
-      return defined ? optionalStringOf(value.toString()) : optionalEmptyString;
-    },
-    toLocaleString: function () {
-      return defined
-        ? optionalStringOf(value.toLocaleString())
-        : optionalEmptyString;
-    },
+    ): Promise<void> => (defined ? await callback(value) : await emptyAction()),
+    toString: () =>
+      defined ? optionalStringOf(value.toString()) : optionalEmptyString,
+    toLocaleString: () =>
+      defined ? optionalStringOf(value.toLocaleString()) : optionalEmptyString,
   };
 
   return returnValue as OptionalValue<T>;
