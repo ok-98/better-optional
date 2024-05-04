@@ -1,5 +1,11 @@
 # better-optional
 
+## 1.0.5
+
+### Patch Changes
+
+- bundle optimization
+
 ## 1.0.4
 
 ### Patch Changes

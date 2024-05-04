@@ -1,6 +1,5 @@
 import type { OptionalT, TOrNull, TOrUndefined } from 'only-utils';
 import { emptyOptional, optionalFunc, OptionalValue } from './optional.ts';
-import { createError } from './errors.ts';
 import { NullError, NullishError, UndefinedError } from 'errors-es';
 
 /**
@@ -70,3 +69,6 @@ export const Optional: OptionalType = {
   },
   empty: <T = unknown>(): OptionalValue<T> => emptyOptional as OptionalValue<T>,
 };
+
+const createError = (valueType: 'nullish' | 'null' | 'undefined') =>
+  `Cannot create an optional value from a ${valueType} value. ${valueType === 'nullish' ? 'If you want to do this on purpose use Optional.ofNullish(). ' : ''}If you want to create an empty optional, use Optional.empty() instead.`;
