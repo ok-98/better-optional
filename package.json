@@ -1,6 +1,6 @@
 {
   "name": "better-optional",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "sideEffects": false,
   "description": "Functional \"Optionals\" solution for JavaScript and TypeScript with async support",
   "license": "MIT",

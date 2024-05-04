@@ -46,7 +46,7 @@ export type OptionalType = {
   empty: <T = unknown>() => OptionalValue<T>;
 };
 
-export const Optional: OptionalType = {
+export default {
   of: <T>(value: NonNullable<T>): OptionalValue<T> => {
     if (value !== null && value !== undefined) {
       return optionalFunc<T>(value);
@@ -68,7 +68,7 @@ export const Optional: OptionalType = {
     throw new NullError(createError('null'));
   },
   empty: <T = unknown>(): OptionalValue<T> => emptyOptional as OptionalValue<T>,
-};
+} as OptionalType;
 
 const createError = (valueType: 'nullish' | 'null' | 'undefined') =>
   `Cannot create an optional value from a ${valueType} value. ${valueType === 'nullish' ? 'If you want to do this on purpose use Optional.ofNullish(). ' : ''}If you want to create an empty optional, use Optional.empty() instead.`;

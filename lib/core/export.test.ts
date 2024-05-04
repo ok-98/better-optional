@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Optional as optional } from './index.ts';
+import optional from './index.ts';
 
 describe('OptionalType', () => {
   it('should create an OptionalValue instance with a nonnullable value', () => {
