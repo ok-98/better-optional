@@ -1,5 +1,11 @@
 # better-optional
 
+## 1.1.0
+
+### Minor Changes
+
+- jsr support
+
 ## 1.0.5
 
 ### Patch Changes

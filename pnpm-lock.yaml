@@ -15,6 +15,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.27.1
         version: 2.27.1
+      '@only/types':
+        specifier: npm:@jsr/only__types@^0.1.0
+        version: '@jsr/only__types@0.1.0'
       '@types/node':
         specifier: ^20.12.8
         version: 20.12.8
@@ -48,9 +51,6 @@ importers:
       husky:
         specifier: ^9.0.11
         version: 9.0.11
-      only-utils:
-        specifier: ^0.4.8
-        version: 0.4.8
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
@@ -376,6 +376,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@jsr/only__types@0.1.0':
+    resolution: {integrity: sha512-rma0y+aEaZ7rpi+6oVPJnChmH4JPgl37NnHgomNN5Hf0Y2zSlfIGXv3nYgZaZ8wS8zLA5ovZf78/hA9k5v+RnQ==, tarball: https://npm.jsr.io/~/11/@jsr/only__types/0.1.0.tgz}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -785,20 +788,9 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  better-optional@1.0.2:
-    resolution: {integrity: sha512-lqjjyVSby90bMELiCYUHSII1CIZc3ryNb0IPi66B827Dn3r4ytaHJ/+QkJh81YpKH3e1hWwZ36QQO+IGpjqJSQ==}
-    engines: {node: '>=18'}
-
   better-path-resolve@1.0.0:
     resolution: {integrity: sha512-pbnl5XzGBdrFU/wT4jqmJVPn2B6UHPBOhzMQkY/SPUPB6QtUXtmBHBIwCbXJol93mOpGMnQyP/+BB19q04xj7g==}
     engines: {node: '>=4'}
-
-  boolchain@0.3.1:
-    resolution: {integrity: sha512-Cd3XYXvdf+9YwEDr9McYCNoCC/eaRqA/EajvqJ5a1e4+lHyouE/E1rWm5AzQkbLp0flo/LEu2bDZ+mfP9/VaZA==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      better-optional: '>=1.0.1'
-      only-utils: '>=0.4.7'
 
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -1333,6 +1325,10 @@ packages:
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
 
+  http-code-util@0.2.3:
+    resolution: {integrity: sha512-Wl+eLAA3vl/4xwuQ61Juond4RFDmX7WLqsb3IiuwPXvoewmhmRbAev2GGrzHERaAwfV6TLg4IJWSIe7FLa1vMQ==}
+    engines: {node: '>=18'}
+
   human-id@1.0.2:
     resolution: {integrity: sha512-UNopramDEhHJD+VR+ehk8rOslwSfByxPIZyJRfV739NDhN5LF1fa1MqnzKm2lGTQRjNrjK19Q5fhkgIfjlVUKw==}
 
@@ -1737,10 +1733,6 @@ packages:
   onetime@6.0.0:
     resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
     engines: {node: '>=12'}
-
-  only-utils@0.4.8:
-    resolution: {integrity: sha512-Rr8WFpnBq8PpBP3eI8odwbqk1Y+Mgrdjf2kOv4JDZlnQ7U8+nTbr03uHIP252qPlZrwKnIRKgnbuz8ZLYTd4fg==}
-    engines: {node: '>=18'}
 
   optionator@0.9.3:
     resolution: {integrity: sha512-JjCoypp+jKn1ttEFExxhetCKeJt9zhAgAve5FXHixTvFDW/5aEktX9bufBKLRRMdU7bNtpLfcGu94B3cdEJgjg==}
@@ -2816,6 +2808,10 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
+  '@jsr/only__types@0.1.0':
+    dependencies:
+      http-code-util: 0.2.3
+
   '@manypkg/find-root@1.1.0':
     dependencies:
       '@babel/runtime': 7.24.4
@@ -3293,16 +3289,9 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  better-optional@1.0.2: {}
-
   better-path-resolve@1.0.0:
     dependencies:
       is-windows: 1.0.2
-
-  boolchain@0.3.1(better-optional@1.0.2)(only-utils@0.4.8):
-    dependencies:
-      better-optional: 1.0.2
-      only-utils: 0.4.8
 
   brace-expansion@1.1.11:
     dependencies:
@@ -3951,6 +3940,8 @@ snapshots:
 
   html-escaper@2.0.2: {}
 
+  http-code-util@0.2.3: {}
+
   human-id@1.0.2: {}
 
   human-signals@2.1.0: {}
@@ -4324,11 +4315,6 @@ snapshots:
   onetime@6.0.0:
     dependencies:
       mimic-fn: 4.0.0
-
-  only-utils@0.4.8:
-    dependencies:
-      better-optional: 1.0.2
-      boolchain: 0.3.1(better-optional@1.0.2)(only-utils@0.4.8)
 
   optionator@0.9.3:
     dependencies:

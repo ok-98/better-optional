@@ -1,4 +1,4 @@
-import type { OptionalT, TOrNull, TOrUndefined } from 'only-utils';
+import type { Optional as OptionalT, TOrNull, TOrUndefined } from '@only/types';
 import { emptyOptional, optionalFunc, OptionalValue } from './optional.ts';
 import { NullError, NullishError, UndefinedError } from 'errors-es';
 

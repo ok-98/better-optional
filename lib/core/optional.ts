@@ -1,4 +1,8 @@
-import type { EmptyFunction, OptionalT, SimpleFunction } from 'only-utils';
+import type {
+  EmptyFunction,
+  Optional as OptionalT,
+  SimpleFunction,
+} from '@only/types';
 import { NoSuchElementError } from 'errors-es';
 import { isDefined } from './util.ts';
 
