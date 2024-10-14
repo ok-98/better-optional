@@ -45,7 +45,26 @@ export type OptionalType = {
   empty: <T = unknown>() => OptionalValue<T>;
 };
 
-export default {
+/**
+ * The `Optional` object provides a set of utility functions to handle optional values.
+ * It includes methods to create optional values from non-nullable, nullable, nullish, and undefinable values.
+ *
+ * @type {OptionalType}
+ *
+ * @property {<T>(value: NonNullable<T>) => OptionalValue<T>} of - Creates an `OptionalValue` from a non-nullable value.
+ * Throws an error if the value is null or undefined.
+ *
+ * @property {<T>(value: OptionalT<T>) => OptionalValue<T>} ofNullish - Creates an `OptionalValue` from a value that can be nullish (null or undefined).
+ *
+ * @property {<T>(value: TOrNull<T>) => OptionalValue<T>} ofNullable - Creates an `OptionalValue` from a value that can be nullable (null).
+ * Throws an error if the value is undefined.
+ *
+ * @property {<T>(value: TOrUndefined<T>) => OptionalValue<T>} ofUndefinable - Creates an `OptionalValue` from a value that can be undefinable (undefined).
+ * Throws an error if the value is null.
+ *
+ * @property {<T = unknown>() => OptionalValue<T>} empty - Returns an empty `OptionalValue`.
+ */
+const Optional: OptionalType = {
   of: <T>(value: NonNullable<T>): OptionalValue<T> => {
     if (value !== null && value !== undefined) {
       return optionalFunc<T>(value);
@@ -67,7 +86,9 @@ export default {
     throw new Error(createError('null'));
   },
   empty: <T = unknown>(): OptionalValue<T> => emptyOptional as OptionalValue<T>,
-} as OptionalType;
+};
+
+export default Optional;
 
 const createError = (valueType: 'nullish' | 'null' | 'undefined') =>
   `Cannot create an optional value from a ${valueType} value. ${valueType === 'nullish' ? 'If you want to do this on purpose use Optional.ofNullish(). ' : ''}If you want to create an empty optional, use Optional.empty() instead.`;

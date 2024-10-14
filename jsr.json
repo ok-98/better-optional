@@ -1,5 +1,5 @@
 {
   "name": "@ok98/optional",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "exports": "./lib/better-optional.ts"
 }
