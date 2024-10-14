@@ -3,7 +3,6 @@ import type {
   Optional as OptionalT,
   SimpleFunction,
 } from '@only/types';
-import { NoSuchElementError } from 'errors-es';
 import { isDefined } from './util.ts';
 
 /**
@@ -181,7 +180,7 @@ export function optionalFunc<T>(value: OptionalT<T>): OptionalValue<T> {
     if (defined) {
       return value!;
     }
-    throw error ?? new NoSuchElementError('Value is not present');
+    throw error ?? new Error('Value is not present');
   };
 
   const returnValue: OptionalValueWithValueOf<T> = {

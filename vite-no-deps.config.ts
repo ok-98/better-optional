@@ -13,8 +13,6 @@ export default defineConfig({
     },
     emptyOutDir: false,
     rollupOptions: {
-      external: ['errors-es'],
-
       output: {
         exports: 'named',
         name,

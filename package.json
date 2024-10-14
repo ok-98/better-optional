@@ -95,8 +95,5 @@
     "vite": "^5.2.11",
     "vite-plugin-dts": "^3.8.3",
     "vitest": "^1.6.0"
-  },
-  "peerDependencies": {
-    "errors-es": ">=0.1.3"
   }
 }
