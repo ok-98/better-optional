@@ -1,6 +1,6 @@
 {
   "name": "better-optional",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "sideEffects": false,
   "description": "Functional \"Optionals\" solution for JavaScript and TypeScript with async support",
   "license": "MIT",
@@ -40,12 +40,10 @@
   "types": "./dist/better-optional.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/better-optional.d.ts",
       "import": "./dist/better-optional.js",
       "require": "./dist/better-optional.umd.js"
     },
     "./nodeps": {
-      "types": "./dist/better-optional.d.ts",
       "import": "./dist/better-optional.nodeps.js",
       "require": "./dist/better-optional.nodeps.umd.js"
     }
