@@ -2,7 +2,7 @@ import type {
   EmptyFunction,
   Optional as OptionalT,
   SimpleFunction,
-} from '@only/types';
+} from 'only-types';
 import { isDefined } from './util.ts';
 
 /**

@@ -1,4 +1,4 @@
-import type { Optional as OptionalT, TOrNull, TOrUndefined } from '@only/types';
+import type { Optional as OptionalT, TOrNull, TOrUndefined } from 'only-types';
 import { emptyOptional, optionalFunc, OptionalValue } from './optional.ts';
 
 /**
