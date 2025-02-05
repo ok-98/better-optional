@@ -1,5 +1,11 @@
 # better-optional
 
+## 1.2.1
+
+### Patch Changes
+
+- minor type fixes
+
 ## 1.2.0
 
 ### Minor Changes

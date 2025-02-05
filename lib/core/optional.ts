@@ -1,8 +1,4 @@
-import type {
-  EmptyFunction,
-  Optional as OptionalT,
-  SimpleFunction,
-} from 'only-types';
+import type { EmptyFunction, Optional, SimpleFunction } from 'only-types';
 import { isDefined } from './util.ts';
 
 /**
@@ -156,6 +152,7 @@ export type OptionalValue<T> = {
   ) => Promise<OptionalValue<R>>;
 };
 
+// eslint-disable-next-line no-wrapper-object-types
 type OptionalValueWithValueOf<T> = OptionalValue<T> & Object;
 
 /**
@@ -173,7 +170,7 @@ export const emptyOptional = optionalFunc<unknown>(void 0);
  * @param value - The value to be wrapped.
  * @returns An object with various utility methods to work with the optional value.
  */
-export function optionalFunc<T>(value: OptionalT<T>): OptionalValue<T> {
+export function optionalFunc<T>(value: Optional<T>): OptionalValue<T> {
   const defined = isDefined(value);
 
   const orThrow = (error?: Error): NonNullable<T> => {
